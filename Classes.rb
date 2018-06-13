@@ -2,8 +2,8 @@ class Station
     attr_reader :trains, :name
 
     def initialize(name)
-      @name=name
-      @trains=[]
+      @name = name
+      @train = []
     end
 
     def get_train(train)  #принимаем поезд
@@ -14,14 +14,11 @@ class Station
     end
   
     def send_train(train)
-      if @trains.include?(train)
-        return
-      end
       @trains.delete(train)
     end
   
     def get_train_type(type)
-      trains.select {|train| train.type == type}
+      trains.select { |train| train.type == type }
     end
   end
   
@@ -29,10 +26,10 @@ class Train
     attr_reader :currspeed, :count_vag
   
     def initialize(number,type,count_vag)
-      @number=number
-      @type=type
-      @count_vag=count_vag
-      @currspeed=0
+      @number = number
+      @type = type
+      @count_vag = count_vag
+      @currspeed = 0
       @curr_position = 0 #индекс в массиве для перемещения по массиву станций
     end
   
@@ -56,7 +53,7 @@ class Train
       @currspeed = 0
     end
 
-    def get_route(route) #назначим марщрут поезду и сразу поместим его на первую станцию в маршруте
+    def set_route(route) #назначим марщрут поезду и сразу поместим его на первую станцию в маршруте
       @route = route
       @route.station.first.get_train(self) #поместим поезд на станцию
     end
@@ -102,24 +99,25 @@ end
 class Route
     attr_reader :stations
 
-    def initialize(first_station,last_station)
-      @stations = [first_station,last_station]
+    def initialize(first_station, last_station)
+      @stations = [first_station, last_station]
     end
 
     def add_station(station) #Добавим промежуточную станцию
-      @stations.insert((@stations.size-1),station)
+      @stations.insert(-1, station)
     end
   
     def del_station(station) #удаляем промежуточную станцию
       if (station != @stations.first) || (station != @stations.last)
-        @stations.delete (station)
+        @stations.delete(station)
       end
     end
 
     def show_stations
-      @stations.each {|n| puts n}
+      @stations.each { |n| puts n }
     end
 end
+
 
   
   
